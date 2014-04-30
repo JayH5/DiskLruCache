@@ -482,8 +482,10 @@ public final class DiskLruCacheTest {
     set("a", "a", "aaa"); // size 4
     set("b", "bb", "bbbb"); // size 6
     set("c", "c", "c"); // size 12
+    long beforeTaskCount = cache.executorService.getTaskCount();
     cache.setMaxSize(10);
-    assertThat(cache.executorService.getTaskCount()).isEqualTo(1);
+    long afterTaskCount = cache.executorService.getTaskCount();
+    assertThat(afterTaskCount).isGreaterThan(beforeTaskCount);
     cache.executorService.purge();
   }
 
