@@ -19,30 +19,12 @@ package com.jakewharton.disklrucache;
 import java.io.Closeable;
 import java.io.File;
 import java.io.IOException;
-import java.io.Reader;
-import java.io.StringWriter;
-import java.nio.charset.Charset;
+import java.util.concurrent.ThreadFactory;
 
 /** Junk drawer of utility methods. */
 final class Util {
-  static final Charset US_ASCII = Charset.forName("US-ASCII");
-  static final Charset UTF_8 = Charset.forName("UTF-8");
 
   private Util() {
-  }
-
-  static String readFully(Reader reader) throws IOException {
-    try {
-      StringWriter writer = new StringWriter();
-      char[] buffer = new char[1024];
-      int count;
-      while ((count = reader.read(buffer)) != -1) {
-        writer.write(buffer, 0, count);
-      }
-      return writer.toString();
-    } finally {
-      reader.close();
-    }
   }
 
   /**
@@ -73,5 +55,15 @@ final class Util {
       } catch (Exception ignored) {
       }
     }
+  }
+
+  static ThreadFactory threadFactory(final String name, final boolean daemon) {
+    return new ThreadFactory() {
+      @Override public Thread newThread(Runnable runnable) {
+        Thread result = new Thread(runnable, name);
+        result.setDaemon(daemon);
+        return result;
+      }
+    };
   }
 }

@@ -58,7 +58,7 @@
 
   <properties>
     <java.version>1.5</java.version>
-
+    <okio.version>0.8.0</okio.version>
     <junit.version>4.10</junit.version>
     <commons-io.version>2.1</commons-io.version>
     <fest.version>2.0M10</fest.version>
@@ -67,6 +67,11 @@
   </properties>
 
   <dependencies>
+    <dependency>
+      <groupId>com.squareup.okio</groupId>
+      <artifactId>okio</artifactId>
+      <version>${okio.version}</version>
+    </dependency>
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
